@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # https://prod-clientpatch.bluearchiveyostar.com/r47_1_22_46zlzvd7mur326newgu8_2 + /MediaResources/MediaCatalog.json
     # res = requests.get(resUrl).json()["Table"]
 
-    with open(pathlib.Path('/workspaces/blue-archive-spine-production/MediaCatalog.json')) as f:
+    with open(pathlib.Path(__file__).parent / 'MediaCatalog.json') as f:
         data = json.load(f)
 
     res = data['Table']
