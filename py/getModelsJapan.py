@@ -11,7 +11,7 @@ option = {
     "skipExistingAssets": True
 }
 
-ba_api = "https://yostar-serverinfo.bluearchiveyostar.com/r69_46_mv2tty056kkdlcs88r73.json"
+ba_api = "https://yostar-serverinfo.bluearchiveyostar.com/r70_47_v8g5eikyrqgs6zuiohj9.json"
 
 ba_api2 = "https://prod-noticeindex.bluearchiveyostar.com/prod/index.json"
 
@@ -40,7 +40,7 @@ def getModelsList():
     Return list of Blue Archive characters url path.
     '''
     data = []
-    base_url = getBaseResourceURL()
+    base_url = 'https://prod-clientpatch.bluearchiveyostar.com/r70_v8g5eikyrqgs6zuiohj9_2'
     res_url = base_url + '/Android/bundleDownloadInfo.json'
     res = requests.get(res_url).json()
     for asset in res["BundleFiles"]:
