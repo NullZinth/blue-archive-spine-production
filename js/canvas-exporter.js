@@ -28,8 +28,8 @@ function exportAnimation(FPS = 60) {
       // Export Section
       let videoStream = exportCanvas.captureStream(FPS); //default to 60
       let mediaRecorder = new MediaRecorder(videoStream, {
-        mimeType: "video/mp4; codecs=h264",
-        videoBitsPerSecond: 1200000,
+        mimeType: "video/webm; codecs=h264",
+        videoBitsPerSecond: 800000,
       });
 
       let chunks = [];
@@ -38,7 +38,7 @@ function exportAnimation(FPS = 60) {
       };
 
       mediaRecorder.onstop = function (e) {
-        let blob = new Blob(chunks, { type: "video/mp4" });
+        let blob = new Blob(chunks, { type: "video/webm" });
         chunks = [];
         let videoURL = URL.createObjectURL(blob);
         exportVideo.src = videoURL;
@@ -67,9 +67,26 @@ function exportAnimation(FPS = 60) {
       }, animLength * 10);
 
       // Record
+      let lastTime = 0;
+      let animationFrame;
+
+      function update(currentTime) {
+        if (lastTime === 0) lastTime = currentTime;
+        const deltaTime = currentTime - lastTime;
+
+        if (deltaTime >= 1000 / FPS) {
+          appExport.render();
+          lastTime = currentTime;
+        }
+        animationFrame = requestAnimationFrame(update);
+      }
+
       mediaRecorder.start();
+      animationFrame = requestAnimationFrame(update);
+
       setTimeout(function () {
         mediaRecorder.stop();
+        cancelAnimationFrame(animFrame) ;
         //Free Resources
         appExport.stage.children.pop();
         appExport.loader.resources = {};
