@@ -12,6 +12,8 @@ function exportAnimation(FPS = 60) {
     width: window.innerWidth,
     height: window.innerHeight,
     view: exportCanvas,
+    antialias: true,
+    resolution: 2,
   });
   appExport.loader
     .add("char", `./${option.models.value}`)
@@ -26,7 +28,10 @@ function exportAnimation(FPS = 60) {
 
       // Export Section
       let videoStream = exportCanvas.captureStream(FPS); //default to 60
-      let mediaRecorder = new MediaRecorder(videoStream);
+      let mediaRecorder = new MediaRecorder(videoStream, {
+        mimeType: "video/webm; codecs=h264",
+        videoBitsPerSecond: 1200000,
+      });
 
       let chunks = [];
       mediaRecorder.ondataavailable = function (e) {
@@ -34,7 +39,7 @@ function exportAnimation(FPS = 60) {
       };
 
       mediaRecorder.onstop = function (e) {
-        let blob = new Blob(chunks, { type: option.exportType.value });
+        let blob = new Blob(chunks, { type: "video/webm" });
         chunks = [];
         let videoURL = URL.createObjectURL(blob);
         exportVideo.src = videoURL;
