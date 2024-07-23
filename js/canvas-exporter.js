@@ -12,8 +12,7 @@ function exportAnimation(FPS = 60) {
     width: window.innerWidth,
     height: window.innerHeight,
     view: exportCanvas,
-    antialias: true,
-    resolution: 2,
+    antialias: true
   });
   appExport.loader
     .add("char", `./${option.models.value}`)
